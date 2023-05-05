@@ -5,6 +5,11 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+const user = {
+  name: "user",
+  password: "password",
+};
+
 const question1 = () => {
   return new Promise((resolve, reject) => {
     rl.question("q1 What do you think of Node.js? ", (answer) => {

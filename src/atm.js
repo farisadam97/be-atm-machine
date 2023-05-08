@@ -8,29 +8,45 @@ const rl = readline.createInterface({
 const user = {
   name: "user",
   password: "password",
+  balance: 120000,
 };
 
 const question1 = () => {
   return new Promise((resolve, reject) => {
-    rl.question("q1 What do you think of Node.js? ", (answer) => {
-      console.log(`Thank you for your valuable feedback: ${answer}`);
+    const enteredUser = prompt("Enter your Username:");
+    if (enteredUser === user.name) {
       resolve();
-    });
+    } else {
+      console.log("can't find username");
+      question1();
+    }
   });
 };
 
 const question2 = () => {
   return new Promise((resolve, reject) => {
-    rl.question("q2 What do you think of Node.js? ", (answer) => {
-      console.log(`Thank you for your valuable feedback: ${answer}`);
-      resolve();
+    rl.setPrompt("Password : ");
+    rl.prompt();
+
+    rl.on("line", (input) => {
+      if (input !== user.password) {
+        console.log("\n Wrong password \n");
+        rl.prompt();
+      } else {
+        rl.close();
+        resolve();
+      }
     });
   });
 };
 
 const main = async () => {
-  await question1();
-  await question2();
+  try {
+    await question1();
+    await question2();
+  } catch (error) {
+    console.log(error);
+  }
   rl.close();
 };
 
